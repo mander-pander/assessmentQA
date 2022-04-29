@@ -23,7 +23,7 @@ rollbar.log('Hello world!')
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
-    rollbar.info('file served');
+    rollbar.log('file served');
 });
 
 // app.get('/styles', (req, rs) => {
@@ -51,9 +51,11 @@ app.get('/api/robots/five', (req, res) => {
         let choices = shuffled.slice(0, 5)
         let compDuo = shuffled.slice(6, 8)
         res.status(200).send({choices, compDuo})
+        rollbar.info('Five robots served for player choice.')
     } catch (error) {
         console.log('ERROR GETTING FIVE BOTS', error)
         res.sendStatus(400)
+        rollbar.warning('Unable to deliver five robots to player')
     }
 })
 
