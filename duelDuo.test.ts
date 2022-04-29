@@ -28,11 +28,11 @@ test('Div displayed with id of "choices" after clicking draw button', async() =>
 
 });
 
-test('Add to Duo button displays the div with id="player-duo"', async() => {
+test('See All Bots button displays div with id of "all-bots"', async() => {
     await driver.findElement(By.id('see-all')).click();
 
     const displayed = await driver.findElement(By.id('all-bots')).isDisplayed();
-    
+
     expect(displayed).toBe(true);
 
 })
