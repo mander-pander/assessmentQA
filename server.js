@@ -23,6 +23,7 @@ rollbar.log('Hello world!')
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
+    rollbar.info('file served');
 });
 
 // app.get('/styles', (req, rs) => {
@@ -40,6 +41,7 @@ app.get('/api/robots', (req, res) => {
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
         res.sendStatus(400)
+        rollbar.error('Unable to get bots!')
     }
 })
 
@@ -76,9 +78,11 @@ app.post('/api/duel', (req, res) => {
         if (compHealthAfterAttack > playerHealthAfterAttack) {
             playerRecord.losses++
             res.status(200).send('You lost!')
+            rollbar.info('Player lost message sent.')
         } else {
             playerRecord.losses++
             res.status(200).send('You won!')
+            rollbar.info('Player won message sent.')
         }
     } catch (error) {
         console.log('ERROR DUELING', error)
@@ -89,9 +93,11 @@ app.post('/api/duel', (req, res) => {
 app.get('/api/player', (req, res) => {
     try {
         res.status(200).send(playerRecord)
+        rollbar.log('Player stats served.')
     } catch (error) {
         console.log('ERROR GETTING PLAYER STATS', error)
         res.sendStatus(400)
+        rollbar.error('Unable to deliver player stats.')
     }
 })
 
