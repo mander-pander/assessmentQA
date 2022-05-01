@@ -37,12 +37,12 @@ app.get('/', (req, res) => {
 
 app.get('/api/robots', (req, res) => {
     try {
-        res.status(200).send(bots)
+        res.status(200).send(botsArr)
         rollbar.log('All bots delivered.')
     } catch (error) {
-        console.log('ERROR GETTING BOTS', error)
+        // console.log('ERROR GETTING BOTS', error)
         res.sendStatus(400)
-        rollbar.error('Unable to get bots!')
+        rollbar.error('Unable to get bots!', error)
     }
 })
 
@@ -54,9 +54,9 @@ app.get('/api/robots/five', (req, res) => {
         res.status(200).send({choices, compDuo})
         rollbar.info('Five robots served for player choice.')
     } catch (error) {
-        console.log('ERROR GETTING FIVE BOTS', error)
+        // console.log('ERROR GETTING FIVE BOTS', error)
         res.sendStatus(400)
-        rollbar.warning('Unable to deliver five robots to player')
+        rollbar.critical('Unable to deliver five robots to player', error)
     }
 })
 
@@ -88,8 +88,9 @@ app.post('/api/duel', (req, res) => {
             rollbar.info('Player won message sent.')
         }
     } catch (error) {
-        console.log('ERROR DUELING', error)
+        // console.log('ERROR DUELING', error)
         res.sendStatus(400)
+        rollbar.error('Dueling error', error);
     }
 })
 
@@ -98,9 +99,9 @@ app.get('/api/player', (req, res) => {
         res.status(200).send(playerRecord)
         rollbar.log('Player stats served.')
     } catch (error) {
-        console.log('ERROR GETTING PLAYER STATS', error)
+        // console.log('ERROR GETTING PLAYER STATS', error)
         res.sendStatus(400)
-        rollbar.error('Unable to deliver player stats.')
+        rollbar.error('Unable to deliver player stats.', error)
     }
 })
 
